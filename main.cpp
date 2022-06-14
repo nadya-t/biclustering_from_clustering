@@ -31,12 +31,12 @@ int main() {
     std::cout << "Input minPts and eps for DBSCAN\n";
     std::cin >> minPts >> eps;
     std::vector<std::vector<int>> clustered_arr = dbscan_biclustering_for_cfp(array, biclusters, minPts, eps);
+    std::cout << "After DBSCAN:\n";
     for (auto &i : clustered_arr) {
-        std::cout << "[";
         for (int j = 0; j < clustered_arr[0].size(); j++) {
             std::cout << i[j] << " ";
         }
-        std::cout << "]\n";
+        std::cout << "\n";
     }
     std::cout << "\n";
     for (auto &i : biclusters) {
@@ -55,12 +55,12 @@ int main() {
     std::cout << "Input number of clusters for k-means and hierarchical biclustering\n";
     std::cin >> n;
     clustered_arr = kmeans_biclustering_for_cfp(array, biclusters, n);
+    std::cout << "After k-means:\n";
     for (auto &i : clustered_arr) {
-        std::cout << "[";
         for (int j = 0; j < clustered_arr[0].size(); j++) {
             std::cout << i[j] << " ";
         }
-        std::cout << "]\n";
+        std::cout << "\n";
     }
     std::cout << "\n";
     for (auto &i : biclusters) {
@@ -76,12 +76,12 @@ int main() {
     }
     std::cout << "\n";
     clustered_arr = hierarchical_biclustering_for_cfp(array, biclusters, n);
+    std::cout << "After hierarchical:\n";
     for (auto &i : clustered_arr) {
-        std::cout << "[";
         for (int j = 0; j < clustered_arr[0].size(); j++) {
             std::cout << i[j] << " ";
         }
-        std::cout << "]\n";
+        std::cout << "\n";
     }
     std::cout << "\n";
     for (auto &i : biclusters) {
