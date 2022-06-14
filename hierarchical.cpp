@@ -26,7 +26,7 @@ std::vector<std::vector<int>> hierarchy(std::vector<std::vector<int>> array, int
     return clusters;
 }
 
-std::vector<std::vector<int>> hierarchical_clusters(std::vector<std::vector<int>> &array, int clusters_number) {
+std::vector<std::vector<int>> hierarchical_clusters_for_cfp(std::vector<std::vector<int>> &array, int clusters_number) {
     std::vector<std::vector<int>> array_for_clustering = array;
     array_for_clustering.erase(array_for_clustering.cbegin());
     for (auto i: array_for_clustering) {
@@ -38,6 +38,18 @@ std::vector<std::vector<int>> hierarchical_clusters(std::vector<std::vector<int>
     for (int i = 0; i < clusters_number; i++) {
         for (int j = 0; j < clusters[i].size(); j++) {
             clustered_arr.push_back(array[clusters[i][j] + 1]);
+        }
+    }
+    array = clustered_arr;
+    return clusters;
+}
+
+std::vector<std::vector<int>> hierarchical_clusters(std::vector<std::vector<int>> &array, int clusters_number) {
+    std::vector<std::vector<int>> clusters = hierarchy(array, clusters_number);
+    std::vector<std::vector<int>> clustered_arr;
+    for (int i = 0; i < clusters_number; i++) {
+        for (int j = 0; j < clusters[i].size(); j++) {
+            clustered_arr.push_back(array[clusters[i][j]]);
         }
     }
     array = clustered_arr;

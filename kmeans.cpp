@@ -86,7 +86,7 @@ void kmeans(std::vector<std::vector<int>> array, std::vector<std::vector<int>> &
     }
 }
 
-std::vector<std::vector<int>> kmeans_clusters(std::vector<std::vector<int>> &array, int clusters_number) {
+std::vector<std::vector<int>> kmeans_clusters_for_cfp(std::vector<std::vector<int>> &array, int clusters_number) {
     std::vector<std::vector<int>> array_for_clustering = array;
     array_for_clustering.erase(array_for_clustering.cbegin());
     for (auto i: array_for_clustering) {
@@ -107,24 +107,17 @@ std::vector<std::vector<int>> kmeans_clusters(std::vector<std::vector<int>> &arr
     return cluster_content;
 }
 
-/*std::vector<std::vector<std::vector<int>>> kmeans_biclusters(const std::vector<std::vector<int>> array, int clusters_number=0) {
-    std::vector<std::vector<int>> array_for_clustering = array;
-    array_for_clustering.erase(array_for_clustering.cbegin());
-    for (auto i: array_for_clustering) {
-        i.erase(i.cbegin());
-    }
-    std::vector<std::vector<int>> cluster_content_col(clusters_number, std::vector<int>(array_for_clustering.size()));
-    std::vector<std::vector<int>> cluster_content_row(clusters_number, std::vector<int>(array_for_clustering.size()));
-    kmeans(array_for_clustering, cluster_content_col);
+std::vector<std::vector<int>> kmeans_clusters(std::vector<std::vector<int>> &array, int clusters_number) {
+    std::vector<std::vector<int>> cluster_content(clusters_number, std::vector<int>(array.size()));
+    kmeans(array, cluster_content);
     std::vector<std::vector<int>> clustered_arr;
-    clustered_arr.push_back(array[0]);
     for (int i = 0; i < clusters_number; i++) {
-        for (int j = 0; j < array_for_clustering.size(); j++) {
+        for (int j = 0; j < array.size(); j++) {
             if (cluster_content[i][j] != -1) {
-                clustered_arr.push_back(array[cluster_content[i][j]+1]);
+                clustered_arr.push_back(array[cluster_content[i][j]]);
             }
         }
     }
-    return clustered_arr;
-}*/
-
+    array = clustered_arr;
+    return cluster_content;
+}

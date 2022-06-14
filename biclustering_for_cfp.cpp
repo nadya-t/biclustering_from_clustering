@@ -1,15 +1,15 @@
-#include "biclustering.h"
+#include "biclustering_for_cfp.h"
 
 std::vector<std::vector<int>>
-kmeans_biclustering(std::vector<std::vector<int>> array, std::vector<std::vector<std::vector<int>>> &biclusters,
+kmeans_biclustering_for_cfp(std::vector<std::vector<int>> array, std::vector<std::vector<std::vector<int>>> &biclusters,
                     int clusters_number) {
     if (clusters_number <= 0) {
         clusters_number = array.size() - 1;
     }
     std::vector<std::vector<int>> clustered_arr = transpose(array);
-    std::vector<std::vector<int>> cluster_content_col = kmeans_clusters(clustered_arr, clusters_number);
+    std::vector<std::vector<int>> cluster_content_col = kmeans_clusters_for_cfp(clustered_arr, clusters_number);
     clustered_arr = transpose(clustered_arr);
-    std::vector<std::vector<int>> cluster_content_row = kmeans_clusters(clustered_arr, clusters_number);
+    std::vector<std::vector<int>> cluster_content_row = kmeans_clusters_for_cfp(clustered_arr, clusters_number);
     clusters_number = cluster_content_col.size();
     for (int i = 0; i < clusters_number; i++) {
         while (i < cluster_content_col.size() && cluster_content_col[i][0] == -1) {
@@ -34,17 +34,17 @@ kmeans_biclustering(std::vector<std::vector<int>> array, std::vector<std::vector
                     cluster_content_col[i].erase(cluster_content_col[i].cbegin() + j);
                 }
     }
-    biclusters = biclusters_from_cluster_content(array, cluster_content_row, cluster_content_col);
+    biclusters = biclusters_from_cluster_content_for_cfp(array, cluster_content_row, cluster_content_col);
     return clustered_arr;
 }
 
 std::vector<std::vector<int>>
-dbscan_biclustering(std::vector<std::vector<int>> array, std::vector<std::vector<std::vector<int>>> &biclusters,
+dbscan_biclustering_for_cfp(std::vector<std::vector<int>> array, std::vector<std::vector<std::vector<int>>> &biclusters,
                     int min, int eps) {
     std::vector<std::vector<int>> clustered_arr = transpose(array);
-    std::vector<int> clusters_col = dbscan_clusters(clustered_arr, eps, min);
+    std::vector<int> clusters_col = dbscan_clusters_for_cfp(clustered_arr, eps, min);
     clustered_arr = transpose(clustered_arr);
-    std::vector<int> clusters_row = dbscan_clusters(clustered_arr, eps, min);
+    std::vector<int> clusters_row = dbscan_clusters_for_cfp(clustered_arr, eps, min);
     int c = 0;
     for (int j = 0; j < clusters_col.size(); j++) {
         if (clusters_col[j] > c)
@@ -63,19 +63,19 @@ dbscan_biclustering(std::vector<std::vector<int>> array, std::vector<std::vector
     for (int i = 0; i < clusters_row.size(); i++) {
         cluster_content_row[clusters_row[i] - 1].push_back(i);
     }
-    biclusters = biclusters_from_cluster_content(array, cluster_content_row, cluster_content_col);
+    biclusters = biclusters_from_cluster_content_for_cfp(array, cluster_content_row, cluster_content_col);
     return clustered_arr;
 }
 
 
 
 std::vector<std::vector<int>>
-hierarchical_biclustering(std::vector<std::vector<int>> array, std::vector<std::vector<std::vector<int>>> &biclusters,
+hierarchical_biclustering_for_cfp(std::vector<std::vector<int>> array, std::vector<std::vector<std::vector<int>>> &biclusters,
                           int clusters_number) {
     std::vector<std::vector<int>> clustered_arr = transpose(array);
-    std::vector<std::vector<int>> cluster_content_col = hierarchical_clusters(clustered_arr, clusters_number);
+    std::vector<std::vector<int>> cluster_content_col = hierarchical_clusters_for_cfp(clustered_arr, clusters_number);
     clustered_arr = transpose(clustered_arr);
-    std::vector<std::vector<int>> cluster_content_row = hierarchical_clusters(clustered_arr, clusters_number);
-    biclusters = biclusters_from_cluster_content(array, cluster_content_row, cluster_content_col);
+    std::vector<std::vector<int>> cluster_content_row = hierarchical_clusters_for_cfp(clustered_arr, clusters_number);
+    biclusters = biclusters_from_cluster_content_for_cfp(array, cluster_content_row, cluster_content_col);
     return clustered_arr;
 }

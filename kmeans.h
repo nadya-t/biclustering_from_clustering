@@ -18,4 +18,6 @@ void kmeans(std::vector<std::vector<int>> array, std::vector<std::vector<int>> &
 
 std::vector<std::vector<int>> kmeans_clusters(std::vector<std::vector<int>> &array, int clusters_number);
 
+std::vector<std::vector<int>> kmeans_clusters_for_cfp(std::vector<std::vector<int>> &array, int clusters_number);
+
 #endif //BICLUSTERING_FROM_CLUSTERING_KMEANS_H

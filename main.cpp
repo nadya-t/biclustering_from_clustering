@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "biclustering.h"
+#include "biclustering_for_cfp.h"
 
 int main() {
     int p, m;
@@ -11,7 +12,7 @@ int main() {
     m++;
     p++;
     std::vector<std::vector<int>> array(m, std::vector<int>(p));
-    std::cout << "Input tour matrix\n";
+    std::cout << "Input your matrix\n";
     for (int i = 0; i < m; i++) {
         if (i == 0) {
             for (int j = 0; j < p; j++) {
@@ -29,7 +30,7 @@ int main() {
     int minPts, eps;
     std::cout << "Input minPts and eps for DBSCAN\n";
     std::cin >> minPts >> eps;
-    std::vector<std::vector<int>> clustered_arr = dbscan_biclustering(array, biclusters, minPts, eps);
+    std::vector<std::vector<int>> clustered_arr = dbscan_biclustering_for_cfp(array, biclusters, minPts, eps);
     for (auto &i : clustered_arr) {
         std::cout << "[";
         for (int j = 0; j < clustered_arr[0].size(); j++) {
@@ -53,7 +54,7 @@ int main() {
     int n;
     std::cout << "Input number of clusters for k-means and hierarchical biclustering\n";
     std::cin >> n;
-    clustered_arr = kmeans_biclustering(array, biclusters, n);
+    clustered_arr = kmeans_biclustering_for_cfp(array, biclusters, n);
     for (auto &i : clustered_arr) {
         std::cout << "[";
         for (int j = 0; j < clustered_arr[0].size(); j++) {
@@ -74,7 +75,7 @@ int main() {
         std::cout << "\n";
     }
     std::cout << "\n";
-    clustered_arr = hierarchical_biclustering(array, biclusters, n);
+    clustered_arr = hierarchical_biclustering_for_cfp(array, biclusters, n);
     for (auto &i : clustered_arr) {
         std::cout << "[";
         for (int j = 0; j < clustered_arr[0].size(); j++) {

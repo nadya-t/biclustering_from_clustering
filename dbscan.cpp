@@ -39,7 +39,7 @@ std::vector<int> DBSCAN(std::vector<std::vector<int>> arr, int eps, int minPts) 
     return clusters;
 }
 
-std::vector<int> dbscan_clusters(std::vector<std::vector<int>> &array, int eps, int min) {
+std::vector<int> dbscan_clusters_for_cfp(std::vector<std::vector<int>> &array, int eps, int min) {
     std::vector<std::vector<int>> array_for_clustering = array;
     array_for_clustering.erase(array_for_clustering.cbegin());
     for (auto i: array_for_clustering) {
@@ -66,6 +66,34 @@ std::vector<int> dbscan_clusters(std::vector<std::vector<int>> &array, int eps, 
             }
             if (clusters[j] == i) {
                 clustered_arr.push_back(array[j + 1]);
+            }
+        }
+    }
+    array = clustered_arr;
+    return clusters;
+}
+
+std::vector<int> dbscan_clusters(std::vector<std::vector<int>> &array, int eps, int min) {
+    if (eps == 0) {
+        for (int i = 0; i < array.size(); i++)
+            for (int j = 0; j < array.size(); j++)
+                if (i != j) {
+                    int d = distFunc(array[i], array[j]);
+                    if (d > eps)
+                        eps = d;
+                }
+        eps = eps / 2;
+    }
+    std::vector<int> clusters = DBSCAN(array, eps, min);
+    std::vector<std::vector<int>> clustered_arr;
+    int n = 0;
+    for (int i = 0; i <= n; i++) {
+        for (int j = 0; j < clusters.size(); j++) {
+            if (i == 0 && clusters[j] > n) {
+                n = clusters[j];
+            }
+            if (clusters[j] == i) {
+                clustered_arr.push_back(array[j]);
             }
         }
     }

@@ -14,4 +14,8 @@ std::vector<std::vector<std::vector<int>>>
 biclusters_from_cluster_content(std::vector<std::vector<int>> array, std::vector<std::vector<int>> row_clusters,
                                 std::vector<std::vector<int>> col_clusters);
 
+std::vector<std::vector<std::vector<int>>>
+biclusters_from_cluster_content_for_cfp(std::vector<std::vector<int>> array, std::vector<std::vector<int>> row_clusters,
+                                std::vector<std::vector<int>> col_clusters);
+
 #endif //BICLUSTERING_FROM_CLUSTERING_FUNCTIONS_H
